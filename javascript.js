@@ -19,9 +19,11 @@ function getHumanChoice() {
 }
 
 function playRound(computerChoice, humanChoice) {
-    
+    // let computerScore = 0;
+    // let humanScore = 0;
+
     if (humanChoice === computerChoice) {
-        console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw! Go again.`);
+        console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`);
         return 0;
     } else if (humanChoice === "rock" && computerChoice === "scissors" ||
                humanChoice === "paper" && computerChoice === "rock" ||
@@ -29,7 +31,7 @@ function playRound(computerChoice, humanChoice) {
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1); 
         computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
         console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-        // return 1;
+        alert(`You win! ${humanChoice} beats ${computerChoice}.`);
         humanScore += 1;
         return humanScore
 
@@ -39,7 +41,6 @@ function playRound(computerChoice, humanChoice) {
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1);
         computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
         console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-        // return 2;
         computerScore += 1;
         return computerScore
     }
@@ -47,42 +48,43 @@ function playRound(computerChoice, humanChoice) {
 
 function playGame() {
 
-    // let result = playRound(computerSelection, humanSelection);
+    for (i = 1; i <= 5; i++) {
+        const computerSelection = getComputerChoice();
+        const humanSelection = getHumanChoice();
 
-    // for (i = 1; i <= 3; i++) {
-    // let counter = 0;    
-        // let result = playRound(computerSelection, humanSelection);
         playRound(computerSelection, humanSelection);
-        // getHumanChoice();
-        // console.log(playRound());
-        // if (result === 1) {
-        //     console.log("Return 1 was returned!");
-        //     humanScore += 1;
-        // } else if (result === 2) {
-        //     console.log("Return 2 was returned!!!");
-        //     computerScore += 1;
-        // }
+ 
+        console.log(computerSelection);
+        console.log(humanSelection);
     }
 
-    // console.log("Game over!");
-// }
+    // console.log("You scored: " + humanScore);
+    // console.log("I scored: " + computerScore);
 
+    if (humanScore > computerScore) {
+        alert("Congratulations, you win!");
+    } else if (computerScore > humanScore) {
+        alert("You lose. Better luck next time!");
+    } else {
+        alert("It's a draw! Let's play again.");
+    }
+}
+
+function declareWinner(test1, test2) {
+    // let test1 = 0;
+    // let test2 = 0;
+    console.log(test1);
+    alert("This is from the declareWinner function: " + test2);
+}
 
 let computerScore = 0;
 let humanScore = 0;
 
-const computerSelection = getComputerChoice();
-const humanSelection = getHumanChoice();
-
-// for (i = 1; i <= 3; i++) {
-// playRound(computerSelection, humanSelection);
-playGame();
-// getHumanChoice();
-// console.log(playRound());
+// for (i = 1; i <= 5; i++) {
+    playGame();
 // }
 
-console.log(computerSelection);
-console.log(humanSelection);
-console.log(humanScore);
-console.log(computerScore);
+console.log("You scored: " + humanScore);
+console.log("I scored: " + computerScore);
 
+declareWinner(humanScore, computerScore);
