@@ -23,7 +23,8 @@ function getHumanChoice() {
 function playRound(computerChoice, humanChoice) {
     // Conditional statement to determine the outcome, increment the score and return the result
     if (humanChoice === computerChoice) {
-        console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`);
+        console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`); // output to console
+        alert(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`); // output to screen
         return 0;
     } else if (humanChoice === "rock" && computerChoice === "scissors" ||
                humanChoice === "paper" && computerChoice === "rock" ||
@@ -60,11 +61,15 @@ function playGame() {
         playRound(computerSelection, humanSelection);
     }
     // Conditional statement to determine the final outcome of the game
+    // and output the result to both the console and screen
     if (humanScore > computerScore) {
+        console.log("Congratulations, you win!");
         alert("Congratulations, you win!");
     } else if (computerScore > humanScore) {
+        console.log("You lose. Better luck next time!");
         alert("You lose. Better luck next time!");
     } else {
+        console.log("It's a draw! Let's play again.");
         alert("It's a draw! Let's play again.");
     }
 }
