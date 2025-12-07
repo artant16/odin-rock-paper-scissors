@@ -1,66 +1,65 @@
+// -- Declare function to return the computer's choice -- //
 function getComputerChoice() {
+    // Declare variable to randomly produce three numbers - 1, 2 and 3 
     let computerChoice = Math.ceil(Math.random() * 3);
+    // Conditional statement to determine and return computer's choice
     if (computerChoice === 1) {
-        // console.log("Rock");
         return "rock";
     } else if (computerChoice === 2) {
-        // console.log("Paper");
         return "paper";
     } else {
-        // console.log("Scissors");
         return "scissors";
     }
 }
 
+// -- Declare function to prompt and return the human player's choice -- //
 function getHumanChoice() {
+    // Declare variable to prompt human player for their choice and convert to lower case
     let humanChoice = prompt("Please type in \"Rock\", \"Paper\" or \"Scissors\": ").toLowerCase();
-    // console.log(humanChoice);
     return humanChoice;
 }
 
+// -- Declare function that takes two arguments and plays a round of Rock Paper Scissors -- //
 function playRound(computerChoice, humanChoice) {
-    // let computerScore = 0;
-    // let humanScore = 0;
-
+    // Conditional statement to determine the outcome, increment the score and return the result
     if (humanChoice === computerChoice) {
         console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`);
         return 0;
     } else if (humanChoice === "rock" && computerChoice === "scissors" ||
                humanChoice === "paper" && computerChoice === "rock" ||
                humanChoice === "scissors" && computerChoice === "paper") {
+        // Format choices for display
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1); 
         computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
-        console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-        alert(`You win! ${humanChoice} beats ${computerChoice}.`);
-        humanScore += 1;
+        console.log(`You win! ${humanChoice} beats ${computerChoice}.`); // output to console
+        alert(`You win! ${humanChoice} beats ${computerChoice}.`); // output to screen
+        humanScore += 1; // increment score
         return humanScore
 
     } else if (humanChoice === "rock" && computerChoice === "paper" ||
                humanChoice === "paper" && computerChoice === "scissors" ||
                humanChoice === "scissors" && computerChoice === "rock") {
+        // Format choices for display
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1);
         computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-        computerScore += 1;
+        console.log(`You lose! ${computerChoice} beats ${humanChoice}.`); // output to console
+        alert(`You lose! ${computerChoice} beats ${humanChoice}.`); // output to screen
+        computerScore += 1; // increment score
         return computerScore
     }
 }
 
+// -- Declare function to play an entire game -- //
 function playGame() {
-
+    // for loop to play number of required rounds
     for (i = 1; i <= 5; i++) {
+        // Declare variables to get computer and human choices 
         const computerSelection = getComputerChoice();
         const humanSelection = getHumanChoice();
-
+        // Call the function to play a single round
         playRound(computerSelection, humanSelection);
- 
-        console.log(computerSelection);
-        console.log(humanSelection);
     }
-
-    // console.log("You scored: " + humanScore);
-    // console.log("I scored: " + computerScore);
-
+    // Conditional statement to determine the final outcome of the game
     if (humanScore > computerScore) {
         alert("Congratulations, you win!");
     } else if (computerScore > humanScore) {
@@ -70,21 +69,9 @@ function playGame() {
     }
 }
 
-function declareWinner(test1, test2) {
-    // let test1 = 0;
-    // let test2 = 0;
-    console.log(test1);
-    alert("This is from the declareWinner function: " + test2);
-}
-
+// Initialise variables for score keeping
 let computerScore = 0;
 let humanScore = 0;
 
-// for (i = 1; i <= 5; i++) {
-    playGame();
-// }
-
-console.log("You scored: " + humanScore);
-console.log("I scored: " + computerScore);
-
-declareWinner(humanScore, computerScore);
+// Call the function to play a game
+playGame();
