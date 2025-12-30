@@ -1,82 +1,131 @@
-// -- Declare function to return the computer's choice -- //
+// -- Function to return the computer's choice -- //
 function getComputerChoice() {
-    // Declare variable to randomly produce three numbers - 1, 2 and 3 
+    // Declare variable to randomly produce the numbers 1, 2 or 3 
     let computerChoice = Math.ceil(Math.random() * 3);
     // Conditional statement to determine and return computer's choice
-    if (computerChoice === 1) {
-        return "rock";
-    } else if (computerChoice === 2) {
-        return "paper";
-    } else {
-        return "scissors";
+    if (computerChoice === 1) { 
+      return "Rock";
+    } else if (computerChoice === 2) { 
+      return "Paper";
+    } else { 
+      return "Scissors";
     }
 }
 
-// -- Declare function to prompt and return the human player's choice -- //
-function getHumanChoice() {
-    // Declare variable to prompt human player for their choice and convert to lower case
-    let humanChoice = prompt("Please type in \"Rock\", \"Paper\" or \"Scissors\": ").toLowerCase();
-    return humanChoice;
-}
+// -- Set variables for rock, paper and scissors buttons -- //
+const rockSelection = document.querySelector("#rock");
+const paperSelection = document.querySelector("#paper");
+const scissorsSelection = document.querySelector("#scissors");
 
-// -- Declare function that takes two arguments and plays a round of Rock Paper Scissors -- //
-function playRound(computerChoice, humanChoice) {
-    // Conditional statement to determine the outcome, increment the score and return the result
-    if (humanChoice === computerChoice) {
-        console.log(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`); // output to console
-        alert(`You chose ${humanChoice}, I chose ${computerChoice}. It's a draw!`); // output to screen
-        return 0;
-    } else if (humanChoice === "rock" && computerChoice === "scissors" ||
-               humanChoice === "paper" && computerChoice === "rock" ||
-               humanChoice === "scissors" && computerChoice === "paper") {
-        // Format choices for display
-        humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1); 
-        computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
-        console.log(`You win! ${humanChoice} beats ${computerChoice}.`); // output to console
-        alert(`You win! ${humanChoice} beats ${computerChoice}.`); // output to screen
-        humanScore += 1; // increment score
-        return humanScore
-
-    } else if (humanChoice === "rock" && computerChoice === "paper" ||
-               humanChoice === "paper" && computerChoice === "scissors" ||
-               humanChoice === "scissors" && computerChoice === "rock") {
-        // Format choices for display
-        humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1);
-        computerChoice = computerChoice[0].toUpperCase() + computerChoice.slice(1); 
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}.`); // output to console
-        alert(`You lose! ${computerChoice} beats ${humanChoice}.`); // output to screen
-        computerScore += 1; // increment score
-        return computerScore
-    }
-}
-
-// -- Declare function to play an entire game -- //
-function playGame() {
-    // for loop to play number of required rounds
-    for (i = 1; i <= 5; i++) {
-        // Declare variables to get computer and human choices 
-        const computerSelection = getComputerChoice();
-        const humanSelection = getHumanChoice();
-        // Call the function to play a single round
-        playRound(computerSelection, humanSelection);
-    }
-    // Conditional statement to determine the final outcome of the game
-    // and output the result to both the console and screen
-    if (humanScore > computerScore) {
-        console.log("Congratulations, you win!");
-        alert("Congratulations, you win!");
-    } else if (computerScore > humanScore) {
-        console.log("You lose. Better luck next time!");
-        alert("You lose. Better luck next time!");
-    } else {
-        console.log("It's a draw! Let's play again.");
-        alert("It's a draw! Let's play again.");
-    }
-}
-
-// Initialise variables for score keeping
-let computerScore = 0;
+// -- Initialise variables for game play -- //
+let gameOver = false;
+let rounds = 5;
+let roundsPlayed = 0;
 let humanScore = 0;
+let computerScore = 0;
 
-// Call the function to play a game
-playGame();
+// -- Rock button logic -- //
+rockSelection.addEventListener("click", () => {
+  if (gameOver === false) {
+    newGameStarted(); // update notice that the game has started
+    playRound(getComputerChoice(), "Rock"); // run a round of the game
+    endGame(); // check if the required number of rounds have been played
+  }
+});
+
+// -- Paper button logic -- //
+paperSelection.addEventListener("click", () => {
+  if (gameOver === false) {
+    newGameStarted(); // update notice that the game has started
+    playRound(getComputerChoice(), "Paper"); // run a round of the game
+    endGame(); // check if the required number of rounds have been played
+  }
+});
+
+// -- Scissor button logic -- //
+scissorsSelection.addEventListener("click", () => {
+  if (gameOver === false) {
+    newGameStarted(); // update notice that the game has started
+    playRound(getComputerChoice(), "Scissors"); // run a round of the game
+    endGame(); // check if the required number of rounds have been played
+  }
+});
+
+// -- Function to take two arguments and play a round of Rock Paper Scissors -- //
+function playRound(computerChoice, humanChoice) {
+  // Set variable for function to list results
+  const outcome = document.createElement("li");
+  // Conditional statement to determine outcome 
+  if (humanChoice === computerChoice) {
+    outcome.textContent = `Round ${roundsPlayed + 1} is a draw! 
+                           We both chose ${humanChoice}!`; // result
+    list.appendChild(outcome); // output result to list on screen
+    roundsPlayed += 1; // increment rounds played counter
+  } else if (humanChoice === "Rock" && computerChoice === "Scissors" ||
+             humanChoice === "Paper" && computerChoice === "Rock" ||
+             humanChoice === "Scissors" && computerChoice === "Paper") {
+    outcome.textContent = `You win Round ${roundsPlayed + 1}! ${humanChoice} 
+                           beats ${computerChoice}.`; // result
+    list.appendChild(outcome); // output result to list on screen
+    humanScore += 1; // increment player's score
+    roundsPlayed += 1; // increment rounds played counter
+  } else if (humanChoice === "Rock" && computerChoice === "Paper" ||
+             humanChoice === "Paper" && computerChoice === "Scissors" ||
+             humanChoice === "Scissors" && computerChoice === "Rock") {
+    outcome.textContent = `You lose Round ${roundsPlayed + 1}! ${computerChoice} 
+                           beats ${humanChoice}.`; // result
+    list.appendChild(outcome); // output result to list on screen
+    computerScore += 1; // increment computer's score
+    roundsPlayed += 1; // increment rounds played counter
+  }
+}
+
+// -- Function to play an entire game -- //
+function endGame() {
+  // Conditional statement to test if game has ended and print final result
+  if (roundsPlayed === rounds) {
+    gameOver = true;
+    if (humanScore > computerScore) {
+        para.textContent = `Congratulations, you win ${humanScore} to 
+                            ${computerScore}!`;
+    } else if (computerScore > humanScore) {
+        para.textContent = `You lose ${computerScore} to ${humanScore}. 
+                            Better luck next time!`;
+    } else {
+        para.textContent = "It's a draw! Let's play again.";
+    }
+    result.appendChild(playAgain); // add button to play again
+  }
+}
+
+// -- Function to start a new game -- //
+function startNewGame() {
+  start.textContent = "Click on Rock, Paper or Scissors to start playing!";
+}
+
+// -- Function to start a new game -- //
+function newGameStarted() {
+  start.textContent = "Playing started!";
+}
+
+// -- Set elements -- //
+const container = document.querySelector("#container");
+const start = document.querySelector("#start");
+const result = document.querySelector("#result");
+const list = document.querySelector("#list");
+const para = document.querySelector("#para");
+const playAgain = document.createElement("button");
+
+// -- Set the button to play again -- //
+playAgain.textContent = "Click here to play again!";
+playAgain.addEventListener('click', function() {
+  list.replaceChildren(); // clear list of results
+  para.replaceChildren(); // clear final result
+  playAgain.remove(); // remove the playAgain button 
+  // Re-initialise variables for game play
+  gameOver = false;
+  roundsPlayed = 0;
+  humanScore = 0;
+  computerScore = 0;
+  startNewGame();
+});
